@@ -28,17 +28,12 @@ public class MainViewController implements Initializable{
 	public void onMenuItemSellerAction() {
 		System.out.println("onMenuItemSellerAction()");
 	}
-	/*
-	@FXML
-	public void onMenuItemDepartmentAction() {
-		loadView("/gui/DepartmentList.fxml");
-	}
-	*/
+
 	@FXML
 	public void onMenuItemDepartmentAction() {
 		loadView2("/gui/DepartmentList.fxml");
 	}
-
+	
 	@FXML
 	public void onMenuItemAboutAction() {
 		loadView("/gui/About.fxml");
@@ -48,6 +43,7 @@ public class MainViewController implements Initializable{
 	public void initialize(URL uri, ResourceBundle rb) {
 		
 	}
+	
 	
 	private synchronized void loadView(String absoluteName) {
 		try {
@@ -66,7 +62,7 @@ public class MainViewController implements Initializable{
 			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
-
+	
 	private synchronized void loadView2(String absoluteName) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
