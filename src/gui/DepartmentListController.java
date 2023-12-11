@@ -44,12 +44,11 @@ public class DepartmentListController implements Initializable {
 	
 	private ObservableList<Department> obslist;
 	
-	//private ObservableList<> activeSession = FXCollections.observableArrayList();
-
 	@FXML
 	public void onBtNewAction(ActionEvent event){
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/DepartmentForm.fxml", parentStage);
+		Department obj = new Department();
+		createDialogForm(obj, "/gui/DepartmentForm.fxml", parentStage);
 	}
 
 	@Override
@@ -62,20 +61,11 @@ public class DepartmentListController implements Initializable {
 	}
 
 	private void intializeNode() {
-		
 		tableCollumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		tableCollumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		//Para centralizar e esticar a tableview
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
-		
-		/*
-		tableCollumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-		tableCollumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-		//Para centralizar e esticar a tableview
-		Stage stage = (Stage) Main.getMainScene().getWindow();
-		tableViewDepartment.prefHeightProperty().bind(stage.heightProperty());
-		*/		
 	}
 	
 	public void updateTableView() {
@@ -87,13 +77,18 @@ public class DepartmentListController implements Initializable {
 		tableViewDepartment.setItems(obslist);
 	}
 
-	private void createDialogForm(String absotluteName, Stage parentStage) {
+	private void createDialogForm(Department obj, String absotluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absotluteName));
 			Pane pane = loader.load();
 			
+			DepartmentFormController controller = loader.getController();
+			controller.setDepartment(obj);
+			controller.updateFormData();
+			
+			
 			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Enter departmente data");
+			dialogStage.setTitle("Enter department data");
 			dialogStage.setScene(new Scene(pane));
 			dialogStage.setResizable(false);
 			dialogStage.initOwner(parentStage);
@@ -101,7 +96,8 @@ public class DepartmentListController implements Initializable {
 			dialogStage.showAndWait();
 			
 		} catch (IOException e) {
-			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
+			Alerts.showAlert("IO Exception", "Error loading view2", e.getMessage(), AlertType.ERROR);
 		}
 	}
 }
